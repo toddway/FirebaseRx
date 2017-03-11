@@ -34,10 +34,11 @@ dependencies {
 }
 
 apply plugin: 'me.tatarka.retrolambda'
-retrolambda {
-    jvmArgs '-noverify'
-    oldJdk JAVA7_HOME
-    jdk JAVA8_HOME
-    javaVersion JavaVersion.VERSION_1_7
-}
+
+apply plugin: 'com.github.dcendents.android-maven'
+
+group='com.github.toddway'
+
+
+
 
