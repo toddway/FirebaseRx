@@ -1,14 +1,11 @@
 package com.toddway.firebaserx;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.tasks.OnCompleteListener;
+import com.google.firebase.tasks.Task;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.subscriptions.Subscriptions;
 
 /**
  * Created by tway on 2/7/17.
@@ -34,23 +31,6 @@ public class FirebaseRx extends FirebaseRxCommon {
         }
     }
 
-    public static Observable<String> observeCurrentUid(FirebaseAuth auth) {
-        return Observable.create(subscriber -> {
-            final FirebaseAuth.AuthStateListener listener = firebaseAuth -> {
-                if (!subscriber.isUnsubscribed()) {
-                    FirebaseUser user = firebaseAuth.getCurrentUser();
-                    subscriber.onNext(user == null ? null : user.getUid());
-                }
-            };
-
-            auth.addAuthStateListener(listener);
-
-            subscriber.add(Subscriptions.create(() -> {
-                auth.removeAuthStateListener(listener);
-            }));
-        });
-    }
-
     public static Observable<Void> observeAddChild(DatabaseReference ref, Object object) {
         return Observable.create(subscriber -> {
             final String key = ref.push().getKey();
@@ -63,10 +43,4 @@ public class FirebaseRx extends FirebaseRxCommon {
         return Observable.create(subscriber -> ref.setValue(object)
                 .addOnCompleteListener(task -> handleComplete(subscriber, task)));
     }
-
-//    public static Observable<DataSnapshot> observeRemoveValue(Query query) {
-//        return observeValue(query)
-//                .doOnNext(snapshot -> snapshot.getRef().removeValue());
-//    }
-
 }

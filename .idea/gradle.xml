@@ -9,6 +9,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/firebaserx" />
+            <option value="$PROJECT_DIR$/firebaserx-common" />
+            <option value="$PROJECT_DIR$/firebaserx-server" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

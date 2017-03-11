@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FirebaseRx.iml" filepath="$PROJECT_DIR$/FirebaseRx.iml" />
       <module fileurl="file://$PROJECT_DIR$/firebaserx/firebaserx.iml" filepath="$PROJECT_DIR$/firebaserx/firebaserx.iml" />
+      <module fileurl="file://$PROJECT_DIR$/firebaserx-common/firebaserx-common.iml" filepath="$PROJECT_DIR$/firebaserx-common/firebaserx-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/firebaserx-server/firebaserx-server.iml" filepath="$PROJECT_DIR$/firebaserx-server/firebaserx-server.iml" />
     </modules>
   </component>
 </project>
