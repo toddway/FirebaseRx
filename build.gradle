@@ -28,5 +28,6 @@ retrolambda {
     jvmArgs '-noverify'
     oldJdk JAVA7_HOME
     jdk JAVA8_HOME
+    javaVersion JavaVersion.VERSION_1_7
 }
 
