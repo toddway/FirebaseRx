@@ -23,11 +23,3 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-apply plugin: 'me.tatarka.retrolambda'
-retrolambda {
-    jvmArgs '-noverify'
-    oldJdk JAVA7_HOME
-    jdk JAVA8_HOME
-    javaVersion JavaVersion.VERSION_1_7
-}
-
