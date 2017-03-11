@@ -11,3 +11,7 @@ apply plugin: 'me.tatarka.retrolambda'
 
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
+
+apply plugin: 'com.github.dcendents.android-maven'
+
+group='com.github.toddway'
