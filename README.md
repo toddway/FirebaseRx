@@ -13,15 +13,26 @@ allprojects {
 ```
 [![](https://jitpack.io/v/toddway/FirebaseRx.svg)](https://jitpack.io/#toddway/FirebaseRx)
 
-Add dependency to your module build.gradle:
+Add dependency to your Android module build.gradle:
 
 ```groovy
 dependencies {
-    compile ('com.github.toddway.FirebaseRx:firebaserx:X.X.X') {
+    compile ('com.github.toddway.FirebaseRx:android:X.X.X') {
         exclude group: 'com.google.firebase'
     }
 }
 ```
+
+or add dependency to your java server module build.gradle:
+
+```groovy
+dependencies {
+    compile ('com.github.toddway.FirebaseRx:server:X.X.X') {
+        exclude group: 'com.google.firebase'
+    }
+}
+```
+
 
 
 License
