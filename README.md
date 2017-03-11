@@ -11,13 +11,15 @@ allprojects {
     }
 }
 ```
-[![](https://jitpack.io/v/toddway/FirebaseRx.svg)](https://jitpack.io/#toddway/Shelf)
+[![](https://jitpack.io/v/toddway/FirebaseRx.svg)](https://jitpack.io/#toddway/FirebaseRx)
 
-Add shelf dependency to the module build.gradle:
+Add dependency to your module build.gradle:
 
 ```groovy
 dependencies {
-    compile 'com.github.toddway:Shelf:X.X.X'
+    compile ('com.github.toddway.FirebaseRx:firebaserx:X.X.X') {
+        exclude group: 'com.google.firebase'
+    }
 }
 ```
 
