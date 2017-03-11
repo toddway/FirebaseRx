@@ -1,5 +1,6 @@
-
-
+## TODO
+- add usage exampels to readme
+- port unit tests into project
 
 ## Install
 Add jitpack to your root build.gradle:
@@ -23,7 +24,7 @@ dependencies {
 }
 ```
 
-or add dependency to your java server module build.gradle:
+or add dependency to your Java server module build.gradle:
 
 ```groovy
 dependencies {
