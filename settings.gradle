@@ -1,1 +1,1 @@
-include ':firebaserx', ':firebaserx-server', ':firebaserx-common'
+include ':android', ':server', ':common'

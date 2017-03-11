@@ -3,9 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FirebaseRx.iml" filepath="$PROJECT_DIR$/FirebaseRx.iml" />
-      <module fileurl="file://$PROJECT_DIR$/firebaserx/firebaserx.iml" filepath="$PROJECT_DIR$/firebaserx/firebaserx.iml" />
-      <module fileurl="file://$PROJECT_DIR$/firebaserx-common/firebaserx-common.iml" filepath="$PROJECT_DIR$/firebaserx-common/firebaserx-common.iml" />
-      <module fileurl="file://$PROJECT_DIR$/firebaserx-server/firebaserx-server.iml" filepath="$PROJECT_DIR$/firebaserx-server/firebaserx-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/android.iml" filepath="$PROJECT_DIR$/android/android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/server/server.iml" filepath="$PROJECT_DIR$/server/server.iml" />
     </modules>
   </component>
 </project>

@@ -10,9 +10,9 @@ import junit.framework.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-@RunWith(AndroidJUnit4.class)
-public class ObserveTaskTests {
 
+@RunWith(AndroidJUnit4.class)
+public class Tests {
 
     @Test
     public void testSignInAnonymously() {
