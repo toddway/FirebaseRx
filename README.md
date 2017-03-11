@@ -1,5 +1,5 @@
 ## TODO
-- add usage exampels to readme
+- add usage examples to readme
 - port unit tests into project
 
 ## Install
