@@ -6,5 +6,8 @@ dependencies {
     compile 'com.google.firebase:firebase-server-sdk:3.0.3'
 }
 
+
+apply plugin: 'me.tatarka.retrolambda'
+
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
