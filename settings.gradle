@@ -1,1 +1,1 @@
-include ':app', ':firebaserx'
+include ':firebaserx'
