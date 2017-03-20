@@ -21,15 +21,15 @@ List<String> keys = Arrays.asList("one", "two", "five");
 Observable<Map<String, Pojo>> o = FirebaseRx.observeChildMap(query, Pojo.class, keys);
 ```
 
-Work with Tasks (e.g. authentication calls)
+Work with Task results (e.g. authentication calls)
 ```java
 FirebaseAuth auth = FirebaseAuth.getInstance();
 
 //observe sign in anonymously
-Observable<Task> o = FirebaseRx.observeTask(auth.signInAnonymously());
+Observable<AuthResult> o = FirebaseRx.observeTask(auth.signInAnonymously());
 
 //observe sign in with credential
-Observable<Task> o = FirebaseRx.observeTask(auth.signInWithCredential(credential));
+Observable<AuthResult> o = FirebaseRx.observeTask(auth.signInWithCredential(credential));
 ```
 
 ## Install
