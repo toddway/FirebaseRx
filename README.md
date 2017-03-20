@@ -1,6 +1,36 @@
-## TODO
-- add usage examples to readme
-- port unit tests into project
+## Usage
+
+Work with Query (or DatabaseReference)
+```java
+Query query = FirebaseDatabase.getInstance().getReference("whatever");
+
+//observe all changes to a Firebase query
+Observable<Pojo> o = FirebaseRx.observeValue(query, Pojo.class);
+
+//observe single change to a Firebase query
+Observable<Pojo> o = FirebaseRx.observeValue(query, Pojo.class).take(1);
+
+//observe set value
+Observable<Void> o = FirebaseRx.observeSetValue(query, new Pojo());
+
+//observe all children of a Firebase query as a map
+Observable<Map<String, Pojo>> o = FirebaseRx.observeChildMap(query, Pojo.class);
+
+//observe children of a Firebase query that match a set of keys
+List<String> keys = Arrays.asList("one", "two", "five");
+Observable<Map<String, Pojo>> o = FirebaseRx.observeChildMap(query, Pojo.class, keys);
+```
+
+Work with Tasks (e.g. authentication calls)
+```java
+FirebaseAuth auth = FirebaseAuth.getInstance();
+
+//observe sign in anonymously
+Observable<Task> o = FirebaseRx.observeTask(auth.signInAnonymously());
+
+//observe sign in with credential
+Observable<Task> o = FirebaseRx.observeTask(auth.signInWithCredential(credential));
+```
 
 ## Install
 Add jitpack to your root build.gradle:

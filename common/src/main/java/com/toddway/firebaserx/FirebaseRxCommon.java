@@ -59,7 +59,7 @@ public class FirebaseRxCommon {
                 .flatMap(dataSnapshot -> toList(dataSnapshot.getChildren(), type));
     }
 
-    public static <T> Observable<Map<String, T>> toMap(Iterable<DataSnapshot> dataSnapshots, Class<T> type) {
+    private static <T> Observable<Map<String, T>> toMap(Iterable<DataSnapshot> dataSnapshots, Class<T> type) {
         return Observable.from(dataSnapshots)
                 .toMap(
                         dataSnapshot1 -> dataSnapshot1.getKey(),
@@ -67,13 +67,18 @@ public class FirebaseRxCommon {
                 );
     }
 
-    public static <T> Observable<List<T>> toList(Iterable<DataSnapshot> dataSnapshots, Class<T> type) {
+    private static <T> Observable<List<T>> toList(Iterable<DataSnapshot> dataSnapshots, Class<T> type) {
         return Observable.from(dataSnapshots)
                 .map(dataSnapshot2 -> dataSnapshot2.getValue(type))
                 .toList();
     }
 
-    public static Observable<List<DataSnapshot>> observeEqualTos(Query query, Iterable<String> equalTos) {
+    public static <T> Observable<Map<String, T>> observeChildMap(Query query, Class<T> type, Iterable<String> keys) {
+        return observeEqualTos(query, keys)
+                .switchMap(snapshots -> toMap(snapshots, type));
+    }
+
+    private static Observable<List<DataSnapshot>> observeEqualTos(Query query, Iterable<String> equalTos) {
         List<Observable<DataSnapshot>> observables = new ArrayList<>();
         if (equalTos != null) {
             for (String equalTo : equalTos) {
