@@ -1,14 +1,13 @@
 apply plugin: 'java'
+apply plugin: 'kotlin'
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile (project(':common'))
 }
 
-apply plugin: 'me.tatarka.retrolambda'
-
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
 
 apply plugin: 'com.github.dcendents.android-maven'
 
