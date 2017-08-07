@@ -33,12 +33,14 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.0'
     testCompile 'junit:junit:4.12'
 
+    compile "com.google.firebase:firebase-database:$firebase_version"
+    compile "com.google.firebase:firebase-auth:$firebase_version"
+
     compile(project(':android')) {
         exclude group: 'com.google.firebase'
     }
 
-    compile 'com.google.firebase:firebase-database:11.0.0'
-    compile 'com.google.firebase:firebase-auth:11.0.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

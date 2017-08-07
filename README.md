@@ -1,6 +1,36 @@
+## Features
+- Use as Kotlin extensions or static Java methods
+- Loose API coupling (should be compatible with any version of Firebase)
+- additional functions for copying, moving, and observing selective keys
+- support for Android Firebase SDK and Server Firebase SDK
+
 ## Usage
 
-Work with Query (or DatabaseReference)
+Firebase Queries (or DatabaseReferences)...
+
+Kotlin extensions:
+```kotlin
+val query = FirebaseDatabase.getInstance().getReference("whatever")
+
+//observe all changes to a Firebase query
+val o = query.observeValue(Pojo::class.java)
+
+//observe single change to a Firebase query
+val o = query.observeValue(Pojo::class.java).take(1)
+
+//observe set value
+val o = query.setValue(new Pojo()).observeTask()
+
+//observe all children of a Firebase query as a map
+val o = query.observeChildMap(Pojo::class.java)
+
+//observe children of a Firebase query that match a set of keys
+val keys = listOf("one", "two", "five");
+val o = query.observeChildMap(Pojo::class.java, keys);
+
+```
+
+Java:
 ```java
 Query query = FirebaseDatabase.getInstance().getReference("whatever");
 
@@ -21,7 +51,20 @@ List<String> keys = Arrays.asList("one", "two", "five");
 Observable<Map<String, Pojo>> o = FirebaseRx.observeChildMap(query, Pojo.class, keys);
 ```
 
-Work with Task results (e.g. authentication calls)
+Tasks (e.g. authentication calls)...
+
+Kotlin extensions:
+```kotlin
+val auth = FirebaseAuth.getInstance();
+
+//observe sign in anonymously
+val o = auth.signInAnonymously().observeTask()
+
+//observe sign in with credential
+val o = auth.signInWithCredential(credential).observeTask();
+```
+
+Java:
 ```java
 FirebaseAuth auth = FirebaseAuth.getInstance();
 

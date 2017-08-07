@@ -35,6 +35,5 @@ apply plugin: 'com.github.dcendents.android-maven'
 
 group='com.github.toddway'
 
-
-
+apply plugin: 'com.google.gms.google-services'
 
