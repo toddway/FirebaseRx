@@ -80,5 +80,10 @@ class FirebaseRxAppTestsKt {
         Assert.assertEquals(sourceBeforeString, sourceAfterString)
     }
 
+    @Test fun testAddKey() {
+        val ref = FirebaseDatabase.getInstance().getReference("items")
+
+        ref.observeValue()
+    }
 
 }

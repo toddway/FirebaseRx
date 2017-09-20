@@ -25,7 +25,7 @@ fun Query.observeValue(): Observable<DataSnapshot> {
             override fun onCancelled(databaseError: DatabaseError) {
                 val code = databaseError.code
                 //if (code == -3) ; //permission denied, do nothing
-                subscriber.onError(databaseError.toException())
+                subscriber.onError(Exception("${databaseError.code} ${databaseError.details}", databaseError.toException()))
             }
         }
 
@@ -36,7 +36,7 @@ fun Query.observeValue(): Observable<DataSnapshot> {
 }
 
 fun <T> Query.observeValue(type: Class<T>): Observable<T> {
-    return observeValue().map { snap -> snap.getValue(type) }
+    return observeValue().map { snap -> getVal(snap, type) }
 }
 
 fun <T> Query.observeChildMap(type: Class<T>): Observable<Map<String, T>> {
@@ -50,11 +50,23 @@ fun <T> Query.observeChildMap(type: Class<T>, keys: Iterable<String>): Observabl
 private fun <T> toMap(snaps: Iterable<DataSnapshot>, type: Class<T>): Map<String, T> {
     val map = LinkedHashMap<String, T>()
     snaps.forEach { snap ->
-        snap.getValue(type)?.let { value ->
-            map.put(snap.key, value)
+        try {
+            getVal(snap, type)?.let { value ->
+                map.put(snap.key, value)
+            }
+        } catch (e : Exception) {
+            e.printStackTrace()
         }
     }
     return map
+}
+
+private fun <T> getVal(snap: DataSnapshot, type: Class<T>): T? {
+    try {
+        return snap.getValue(type)
+    } catch (e : Exception) {
+        throw Exception(snap.ref.toString() + " to " + type.toString() + " failed", e)
+    }
 }
 
 
