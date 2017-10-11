@@ -9,7 +9,8 @@ import com.google.firebase.database.Query;
 
 import java.util.Map;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 /**
  * Created by tway on 2/7/17.
@@ -17,7 +18,7 @@ import rx.Observable;
 
 public class FirebaseRx {
 
-    public static <T> Observable<T> observeTask(Task<T> task) {
+    public static <T> Observable<Optional<T>> observeTask(Task<T> task) {
         return FirebaseRxKt.observeTask(task);
     }
 
@@ -25,7 +26,7 @@ public class FirebaseRx {
         return FirebaseRxKt.observeCurrentUser(auth);
     }
 
-    public static Observable<Void> observeAddChild(DatabaseReference ref, Object object) {
+    public static Observable<Optional<Void>> observeAddChild(DatabaseReference ref, Object object) {
         return FirebaseRxKt.observeAddChild(ref, object);
     }
 
@@ -33,7 +34,7 @@ public class FirebaseRx {
         return FirebaseRxCommonKt.observeValue(query);
     }
 
-    public static <T> Observable<T> observeValue(Query query, Class<T> type) {
+    public static <T> Observable<Optional<T>> observeValue(Query query, Class<T> type) {
         return FirebaseRxCommonKt.observeValue(query, type);
     }
 

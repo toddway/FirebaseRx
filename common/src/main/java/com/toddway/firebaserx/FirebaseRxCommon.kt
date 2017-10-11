@@ -4,8 +4,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.Query
 import com.google.firebase.database.ValueEventListener
-import rx.Observable
-import rx.subscriptions.Subscriptions
+import io.reactivex.Observable
 import java.util.*
 
 /**
@@ -17,7 +16,7 @@ fun Query.observeValue(): Observable<DataSnapshot> {
     return Observable.create<DataSnapshot> { subscriber ->
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (!subscriber.isUnsubscribed) {
+                if (!subscriber.isDisposed) {
                     subscriber.onNext(snapshot)
                 }
             }
@@ -29,14 +28,13 @@ fun Query.observeValue(): Observable<DataSnapshot> {
             }
         }
 
-        subscriber.add(Subscriptions.create { this.removeEventListener(listener) })
-
+        subscriber.setCancellable { this.removeEventListener(listener) }
         this.addValueEventListener(listener)
     }
 }
 
-fun <T> Query.observeValue(type: Class<T>): Observable<T> {
-    return observeValue().map { snap -> getVal(snap, type) }
+fun <T> Query.observeValue(type: Class<T>): Observable<Optional<T>> {
+    return observeValue().map { snap -> getOptionalValue(snap, type) }
 }
 
 fun <T> Query.observeChildMap(type: Class<T>): Observable<Map<String, T>> {
@@ -51,9 +49,7 @@ private fun <T> toMap(snaps: Iterable<DataSnapshot>, type: Class<T>): Map<String
     val map = LinkedHashMap<String, T>()
     snaps.forEach { snap ->
         try {
-            getVal(snap, type)?.let { value ->
-                map.put(snap.key, value)
-            }
+            getOptionalValue(snap, type).get()?.let { map.put(snap.key, it) }
         } catch (e : Exception) {
             e.printStackTrace()
         }
@@ -61,9 +57,9 @@ private fun <T> toMap(snaps: Iterable<DataSnapshot>, type: Class<T>): Map<String
     return map
 }
 
-private fun <T> getVal(snap: DataSnapshot, type: Class<T>): T? {
+private fun <T> getOptionalValue(snap: DataSnapshot, type: Class<T>): Optional<T> {
     try {
-        return snap.getValue(type)
+        return Optional(snap.getValue(type))
     } catch (e : Exception) {
         throw Exception(snap.ref.toString() + " to " + type.toString() + " failed", e)
     }
@@ -88,8 +84,9 @@ private fun observeEqualTos(query: Query, equalTos: Iterable<String>?): Observab
                 }
                 .flatMap { dataSnapshots ->
                     Observable
-                            .from(dataSnapshots)
-                            .flatMap({ dataSnapshot : DataSnapshot -> Observable.from(dataSnapshot.children) })
+                            .fromIterable(dataSnapshots)
+                            .flatMap({ dataSnapshot -> Observable.fromIterable(dataSnapshot.children) })
                             .toList()
+                            .toObservable()
                 }
 }

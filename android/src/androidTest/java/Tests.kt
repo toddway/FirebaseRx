@@ -15,7 +15,7 @@ class Tests {
     companion object {
         @BeforeClass @JvmStatic fun before() {
             if (FirebaseAuth.getInstance().currentUser == null)
-                FirebaseAuth.getInstance().signInAnonymously().observeTask().toBlocking().first()
+                FirebaseAuth.getInstance().signInAnonymously().observeTask().blockingFirst()
         }
     }
 
@@ -25,9 +25,9 @@ class Tests {
         val ref = FirebaseDatabase.getInstance().getReference("testSetAndGetValue")
         val beforeString = ref.push().key
 
-        ref.removeValue().observeTask().toBlocking().first()
-        ref.setValue(beforeString).observeTask().toBlocking().first()
-        val afterString = ref.observeValue(String::class.java).toBlocking().first()
+        ref.removeValue().observeTask().blockingFirst()
+        ref.setValue(beforeString).observeTask().blockingFirst()
+        val afterString = ref.observeValue(String::class.java).blockingFirst()
 
         Assert.assertEquals(beforeString, afterString)
     }

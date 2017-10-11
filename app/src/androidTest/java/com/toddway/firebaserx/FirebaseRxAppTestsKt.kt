@@ -14,7 +14,7 @@ class FirebaseRxAppTestsKt {
     companion object {
         @BeforeClass @JvmStatic fun before() {
             if (FirebaseAuth.getInstance().currentUser == null)
-                    FirebaseAuth.getInstance().signInAnonymously().observeTask().toBlocking().first()
+                    FirebaseAuth.getInstance().signInAnonymously().observeTask().blockingFirst()
         }
     }
 
@@ -22,9 +22,9 @@ class FirebaseRxAppTestsKt {
         val ref = FirebaseDatabase.getInstance().getReference("testSetAndGetValue")
         val beforeString = ref.push().key
 
-        ref.removeValue().observeTask().toBlocking().first()
-        ref.setValue(beforeString).observeTask().toBlocking().first()
-        val afterString = ref.observeValue(String::class.java).toBlocking().first()
+        ref.removeValue().observeTask().blockingFirst(null)
+        ref.setValue(beforeString).observeTask().blockingFirst(null)
+        val afterString = ref.observeValue(String::class.java).blockingFirst().get()
 
         Assert.assertEquals(beforeString, afterString)
     }
@@ -33,9 +33,9 @@ class FirebaseRxAppTestsKt {
         val ref = FirebaseDatabase.getInstance().getReference("testSetAndGetChildMap")
         val beforeMap = mapOf(Pair("first key", "first value"), Pair("second key", "second value"), Pair("third key", "third value"))
 
-        ref.removeValue().observeTask().toBlocking().first()
-        ref.setValue(beforeMap).observeTask().toBlocking().first()
-        val afterMap = ref.observeChildMap(String::class.java).toBlocking().first()
+        ref.removeValue().observeTask().blockingFirst(null)
+        ref.setValue(beforeMap).observeTask().blockingFirst(null)
+        val afterMap = ref.observeChildMap(String::class.java).blockingFirst(null)
 
         println(afterMap.values) //prints [first value, second value, third value]
         Assert.assertEquals(beforeMap, afterMap)
@@ -44,10 +44,10 @@ class FirebaseRxAppTestsKt {
     @Test fun testSetAndRemoveValue() {
         val ref = FirebaseDatabase.getInstance().getReference("testSetAndRemoveValue")
 
-        ref.removeValue().observeTask().toBlocking().first()
-        ref.setValue("something").observeTask().toBlocking().first()
-        ref.removeValue().observeTask().toBlocking().first()
-        val afterString = ref.observeValue(String::class.java).toBlocking().first()
+        ref.removeValue().observeTask().blockingFirst(null)
+        ref.setValue("something").observeTask().blockingFirst(null)
+        ref.removeValue().observeTask().blockingFirst(null)
+        val afterString = ref.observeValue(String::class.java).blockingFirst(null).get()
 
         Assert.assertNull(afterString)
     }
@@ -57,10 +57,10 @@ class FirebaseRxAppTestsKt {
         val targetRef = FirebaseDatabase.getInstance().getReference("testMoveValueTarget")
         val sourceBeforeString = ref.push().key
 
-        ref.setValue(sourceBeforeString).observeTask().toBlocking().first()
-        ref.observeMoveValue(targetRef).toBlocking().first()
-        val targetAfterString = targetRef.observeValue(String::class.java).toBlocking().first()
-        val sourceAfterString = ref.observeValue(String::class.java).toBlocking().first()
+        ref.setValue(sourceBeforeString).observeTask().blockingFirst(null)
+        ref.observeMoveValue(targetRef).blockingFirst(null)
+        val targetAfterString = targetRef.observeValue(String::class.java).blockingFirst().get()
+        val sourceAfterString = ref.observeValue(String::class.java).blockingFirst().get()
 
         Assert.assertEquals(targetAfterString, sourceBeforeString)
         Assert.assertNull(sourceAfterString)
@@ -71,10 +71,10 @@ class FirebaseRxAppTestsKt {
         val targetRef = FirebaseDatabase.getInstance().getReference("testMoveValueTarget")
         val sourceBeforeString = ref.push().key
 
-        ref.setValue(sourceBeforeString).observeTask().toBlocking().first()
-        ref.observeCopyValue(targetRef).toBlocking().first()
-        val targetAfterString = targetRef.observeValue(String::class.java).toBlocking().first()
-        val sourceAfterString = ref.observeValue(String::class.java).toBlocking().first()
+        ref.setValue(sourceBeforeString).observeTask().blockingFirst(null)
+        ref.observeCopyValue(targetRef).blockingFirst(null)
+        val targetAfterString = targetRef.observeValue(String::class.java).blockingFirst().get()
+        val sourceAfterString = ref.observeValue(String::class.java).blockingFirst().get()
 
         Assert.assertEquals(targetAfterString, sourceBeforeString)
         Assert.assertEquals(sourceBeforeString, sourceAfterString)

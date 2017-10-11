@@ -27,7 +27,7 @@ public class FirebaseRxAppTests {
 
     @Test
     public void testSignInAnonymously() {
-        AuthResult result = FirebaseRx.observeTask(FirebaseAuth.getInstance().signInAnonymously()).toBlocking().first();
+        AuthResult result = FirebaseRx.observeTask(FirebaseAuth.getInstance().signInAnonymously()).blockingFirst(null).get();
         Assert.assertNotNull(result.getUser().getUid());
     }
 
@@ -35,8 +35,8 @@ public class FirebaseRxAppTests {
     public void testSetAndGetValue() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("testSetAndGetValue");
         String beforeString = ref.push().getKey();
-        FirebaseRx.observeTask(ref.setValue(beforeString)).toBlocking().first();
-        String afterString = FirebaseRx.observeValue(ref, beforeString.getClass()).toBlocking().first();
+        FirebaseRx.observeTask(ref.setValue(beforeString)).blockingFirst();
+        String afterString = FirebaseRx.observeValue(ref, beforeString.getClass()).blockingFirst(null).get();
         Assert.assertEquals(beforeString, afterString);
     }
 }
