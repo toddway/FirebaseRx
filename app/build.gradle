@@ -12,6 +12,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -35,6 +36,7 @@ dependencies {
 
     compile "com.google.firebase:firebase-database:$firebase_version"
     compile "com.google.firebase:firebase-auth:$firebase_version"
+    compile "com.google.firebase:firebase-firestore:$firebase_version"
 
     compile(project(':android')) {
         exclude group: 'com.google.firebase'

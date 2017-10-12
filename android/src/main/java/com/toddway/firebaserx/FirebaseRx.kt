@@ -4,6 +4,8 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.QuerySnapshot
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 
@@ -60,5 +62,18 @@ fun observeCurrentUser(auth: FirebaseAuth): Observable<FirebaseUser?> {
 
         auth.addAuthStateListener(listener)
         subscriber.setCancellable { auth.removeAuthStateListener(listener) }
+    }
+}
+
+fun Query.observeValue(): Observable<QuerySnapshot> {
+    return Observable.create<QuerySnapshot> { emitter ->
+        val registration = this.addSnapshotListener({ snap, exception ->
+            when {
+                exception != null -> emitter.onError(exception)
+                snap == null -> emitter.onError(kotlin.NullPointerException())
+                else -> emitter.onNext(snap)
+            }
+        })
+        emitter.setCancellable { registration.remove() }
     }
 }
